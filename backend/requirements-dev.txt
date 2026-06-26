@@ -1,0 +1,3 @@
+# Local development (Docker, MySQL). Production (Render/Postgres) uses requirements.txt.
+-r requirements.txt
+mysqlclient==2.2.4
