@@ -8,6 +8,7 @@ import Transfers from './Transfers'
 import Patients from './Patients'
 import Requests from './Requests'
 import Loans from './Loans'
+import Maintenance from './Maintenance'
 
 const ROLE_LABELS: Record<string, string> = {
   national_manager: 'مدیر ملی',
@@ -177,7 +178,7 @@ export default function Dashboard() {
             <Route path="patients" element={<Patients />} />
             <Route path="requests" element={<Requests />} />
             <Route path="loans" element={<Loans />} />
-            <Route path="maintenance" element={<ComingSoon title="نگهداری" />} />
+            <Route path="maintenance" element={<Maintenance />} />
             <Route path="donors" element={<ComingSoon title="خیرین" />} />
             <Route path="reports" element={<ComingSoon title="گزارش‌ها" />} />
             <Route path="*" element={<Navigate to="/app" replace />} />
