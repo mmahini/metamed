@@ -27,6 +27,9 @@ frontend/node_modules/
 frontend/dist/
 frontend/tsconfig.tsbuildinfo
 
+# Vercel
+.vercel/
+
 # macOS
 .DS_Store
 .AppleDouble

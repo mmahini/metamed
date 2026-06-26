@@ -4,6 +4,10 @@
 
 A national network for managing the lifecycle of medical and care equipment — collecting, registering, lending to patients in need, repairing, and recycling back into service.
 
+> **Status (2026-06-27):** All 8 phases complete (PRs #1–#8) and deployed.
+> App: https://metamed-weld.vercel.app · API: https://metamed-backend.onrender.com
+> See [DEPLOYMENT.md](DEPLOYMENT.md) for infra details.
+
 ---
 
 ## Tech Stack
@@ -86,7 +90,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 2 — Org Structure & Core Models (branch: `phase/2-models`)
+### Phase 2 — Org Structure & Core Models ✅ (branch: `phase/2-org-models`, PR #2)
 - `Organization` — top-level Metamed entity
 - `Branch` — city-level (شعب شهرستانی)
 - `Unit` — service unit (واحدهای خدمت‌رسان), linked to Branch
@@ -100,7 +104,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 3 — Equipment Management (branch: `phase/3-equipment`)
+### Phase 3 — Equipment Management ✅ (branch: `phase/3-equipment`, PR #3)
 - Equipment CRUD (register, list, filter, detail)
 - Equipment inspection form (`EquipmentInspection`)
 - Equipment transfer between units/branches (`EquipmentTransfer`)
@@ -111,7 +115,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 4 — Service Operations: Patients & Loans (branch: `phase/4-loans`)
+### Phase 4 — Service Operations: Patients & Loans ✅ (branch: `phase/4-loans`, PR #4)
 - `EquipmentRequest` — patient requests specific equipment type
 - `Borrower` — person who physically receives the equipment (may differ from patient)
 - `Referrer` — who referred the patient (doctor, hospital, NGO)
@@ -124,7 +128,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 5 — Maintenance & Quality (branch: `phase/5-maintenance`)
+### Phase 5 — Maintenance & Quality ✅ (branch: `phase/5-maintenance`, PR #5)
 - `DamageReport` — reported damage on return
 - `Maintenance` — repair record with technician, cost, dates
 - `EquipmentInspection` — pre-loan / post-return checklist
@@ -135,7 +139,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 6 — Donations & Community (branch: `phase/6-donations`)
+### Phase 6 — Donations & Community ✅ (branch: `phase/6-donations`, PR #6)
 - `Donor` — خیرین (individuals + organizations)
 - `EquipmentDonation` — donated equipment with ownership tracking
 - `CashDonation` — نقدی / دیجیتال
@@ -146,7 +150,7 @@ A national network for managing the lifecycle of medical and care equipment — 
 
 ---
 
-### Phase 7 — Role-Based Dashboards (branch: `phase/7-dashboards`)
+### Phase 7 — Role-Based Dashboards ✅ (branch: `phase/7-dashboards`, PR #7)
 Four dashboard views matching the provided mockups:
 
 1. **National Executive** (`national_manager`) — full network KPIs, Iran map, 12-month trend charts, strategic alerts
@@ -160,7 +164,7 @@ Metrics: all KPIs from the proposal's Chapter 12
 
 ---
 
-### Phase 8 — Reports & Advanced (branch: `phase/8-reports`)
+### Phase 8 — Reports & Advanced ✅ (branch: `phase/8-reports`, PR #8)
 - Export to Excel / PDF
 - Strategic KPIs from Chapter 7 of executive annex
 - Notification system (in-app + email)
