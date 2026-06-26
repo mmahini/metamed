@@ -9,6 +9,8 @@ import Patients from './Patients'
 import Requests from './Requests'
 import Loans from './Loans'
 import Maintenance from './Maintenance'
+import Donors from './Donors'
+import Volunteers from './Volunteers'
 
 const ROLE_LABELS: Record<string, string> = {
   national_manager: 'مدیر ملی',
@@ -46,6 +48,7 @@ const NAV_SECTIONS = [
     label: 'گزارش‌ها',
     items: [
       { to: '/app/donors', label: 'خیرین', icon: '🤝' },
+      { to: '/app/volunteers', label: 'داوطلبان', icon: '🙋' },
       { to: '/app/reports', label: 'گزارش‌ها', icon: '📈' },
     ],
   },
@@ -179,7 +182,8 @@ export default function Dashboard() {
             <Route path="requests" element={<Requests />} />
             <Route path="loans" element={<Loans />} />
             <Route path="maintenance" element={<Maintenance />} />
-            <Route path="donors" element={<ComingSoon title="خیرین" />} />
+            <Route path="donors" element={<Donors />} />
+            <Route path="volunteers" element={<Volunteers />} />
             <Route path="reports" element={<ComingSoon title="گزارش‌ها" />} />
             <Route path="*" element={<Navigate to="/app" replace />} />
           </Routes>
