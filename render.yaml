@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: metamed-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: metamed-db
+          property: connectionString
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false   # set in Render dashboard after frontend deploys
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        value: "متامد <noreply@metamed.ir>"
+      - key: OTP_EXPOSE_DEV_CODE
+        value: "0"
+    healthCheckPath: /api/health/
+
+databases:
+  - name: metamed-db
+    databaseName: metamed
+    user: metamed
+    # MySQL is $7/month on Render. For free tier, use Aiven free MySQL (1GB).
+    # Set DATABASE_URL manually in the Render dashboard to point at Aiven.
