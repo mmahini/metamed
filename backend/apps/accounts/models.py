@@ -75,6 +75,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=UserRole.choices,
         default=UserRole.VOLUNTEER,
     )
+    branch = models.ForeignKey(
+        "organization.Branch",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="staff",
+        verbose_name="شعبه",
+    )
+    unit = models.ForeignKey(
+        "organization.Unit",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="staff",
+        verbose_name="واحد",
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
