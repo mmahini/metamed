@@ -75,3 +75,15 @@ export function authRequest<T>(
     },
   })
 }
+
+/* Authenticated fetch using token from localStorage — use in page components */
+export function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = localStorage.getItem('mm_access') ?? ''
+  return request<T>(path, {
+    ...init,
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...init?.headers,
+    },
+  })
+}
