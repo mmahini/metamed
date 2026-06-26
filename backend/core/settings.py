@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "apps.loans",
     "apps.maintenance",
     "apps.community",
+    "apps.dashboard",
 ]
 
 AUTH_USER_MODEL = "accounts.User"

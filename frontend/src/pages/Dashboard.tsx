@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
+import DashboardHome from './DashboardHome'
 import Branches from './Branches'
 import Units from './Units'
 import EquipmentList from './EquipmentList'
@@ -53,36 +54,6 @@ const NAV_SECTIONS = [
     ],
   },
 ]
-
-function DashboardHome() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold" style={{ marginBottom: 'var(--space-6)' }}>داشبورد</h2>
-      <div className="kpi-grid" style={{ marginBottom: 'var(--space-8)' }}>
-        {[
-          { label: 'تجهیزات فعال', value: '—' },
-          { label: 'امانت‌های جاری', value: '—' },
-          { label: 'در انتظار تعمیر', value: '—' },
-          { label: 'خیرین ثبت‌شده', value: '—' },
-        ].map(kpi => (
-          <div key={kpi.label} className="kpi-card">
-            <div className="kpi-label">{kpi.label}</div>
-            <div className="kpi-value">{kpi.value}</div>
-          </div>
-        ))}
-      </div>
-      <div className="card text-center" style={{ padding: 'var(--space-12)', color: 'var(--color-text-secondary)' }}>
-        <div style={{ fontSize: 48, marginBottom: 'var(--space-4)' }}>🚧</div>
-        <p className="text-lg font-semibold" style={{ marginBottom: 'var(--space-2)' }}>
-          فاز ۲ — ساختار سازمانی و مدل‌های پایه تکمیل شد
-        </p>
-        <p className="text-sm text-muted">
-          از منوی کناری به شعبه‌ها، واحدها، تجهیزات و بیماران دسترسی داشته باشید.
-        </p>
-      </div>
-    </div>
-  )
-}
 
 function ComingSoon({ title }: { title: string }) {
   return (
