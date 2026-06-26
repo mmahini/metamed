@@ -17,4 +17,5 @@ urlpatterns = [
     path("api/", include("apps.loans.urls")),
     path("api/", include("apps.maintenance.urls")),
     path("api/", include("apps.community.urls")),
+    path("api/", include("apps.dashboard.urls")),
 ]
