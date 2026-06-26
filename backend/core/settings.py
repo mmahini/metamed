@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "drf_spectacular",
     "apps.accounts",
     "apps.organization",
     "apps.equipment",
@@ -28,6 +29,9 @@ INSTALLED_APPS = [
     "apps.maintenance",
     "apps.community",
     "apps.dashboard",
+    "apps.reports",
+    "apps.notifications",
+    "apps.search",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -149,6 +153,14 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "متامد API",
+    "DESCRIPTION": "API سامانه مدیریت تجهیزات امانی مراقبتی درمانی متامد",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 # Sliding sessions: refresh every call issues a new refresh token so active

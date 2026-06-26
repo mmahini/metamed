@@ -12,6 +12,9 @@ import Loans from './Loans'
 import Maintenance from './Maintenance'
 import Donors from './Donors'
 import Volunteers from './Volunteers'
+import Reports from './Reports'
+import Notifications from './Notifications'
+import TopbarTools from '../components/TopbarTools'
 
 const ROLE_LABELS: Record<string, string> = {
   national_manager: 'مدیر ملی',
@@ -54,18 +57,6 @@ const NAV_SECTIONS = [
     ],
   },
 ]
-
-function ComingSoon({ title }: { title: string }) {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold" style={{ marginBottom: 'var(--space-6)' }}>{title}</h2>
-      <div className="card text-center" style={{ padding: 'var(--space-16)', color: 'var(--color-text-secondary)' }}>
-        <div style={{ fontSize: 48, marginBottom: 'var(--space-4)' }}>🚧</div>
-        <p className="text-lg font-semibold">به زودی…</p>
-      </div>
-    </div>
-  )
-}
 
 export default function Dashboard() {
   const { user, logout } = useAuth()
@@ -135,7 +126,7 @@ export default function Dashboard() {
       {/* Main content with nested routes */}
       <div className="main-content">
         <header className="topbar">
-          <div />
+          <TopbarTools />
           <div className="flex items-center gap-3">
             <span className="badge badge-blue">{roleLabel}</span>
           </div>
@@ -155,7 +146,8 @@ export default function Dashboard() {
             <Route path="maintenance" element={<Maintenance />} />
             <Route path="donors" element={<Donors />} />
             <Route path="volunteers" element={<Volunteers />} />
-            <Route path="reports" element={<ComingSoon title="گزارش‌ها" />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="*" element={<Navigate to="/app" replace />} />
           </Routes>
         </main>

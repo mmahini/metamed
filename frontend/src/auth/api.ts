@@ -87,3 +87,21 @@ export function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
     },
   })
 }
+
+/* Download an authenticated file (e.g. CSV export) and trigger a save dialog. */
+export async function apiDownload(path: string, filename: string): Promise<void> {
+  const token = localStorage.getItem('mm_access') ?? ''
+  const res = await fetch(`${BASE}/api/${path}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  if (!res.ok) throw new ApiError(res.status, {})
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  URL.revokeObjectURL(url)
+}
