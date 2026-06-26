@@ -80,6 +80,10 @@ if db_url:
     if _scheme.startswith("postgres"):
         _engine = "django.db.backends.postgresql"
         _opts: dict = {}
+        # Optional schema isolation on a shared Postgres instance
+        _schema = os.getenv("DATABASE_SCHEMA", "").strip()
+        if _schema:
+            _opts["options"] = f"-c search_path={_schema}"
     else:
         _engine = "django.db.backends.mysql"
         _opts = {"charset": "utf8mb4"}
