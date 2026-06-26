@@ -6,6 +6,8 @@ import EquipmentList from './EquipmentList'
 import EquipmentDetail from './EquipmentDetail'
 import Transfers from './Transfers'
 import Patients from './Patients'
+import Requests from './Requests'
+import Loans from './Loans'
 
 const ROLE_LABELS: Record<string, string> = {
   national_manager: 'مدیر ملی',
@@ -27,6 +29,7 @@ const NAV_SECTIONS = [
       { to: '/app/equipment', label: 'تجهیزات', icon: '🏥' },
       { to: '/app/transfers', label: 'انتقال‌ها', icon: '🔁' },
       { to: '/app/patients', label: 'بیماران', icon: '👤' },
+      { to: '/app/requests', label: 'درخواست‌ها', icon: '📝' },
       { to: '/app/loans', label: 'امانت‌ها', icon: '📋' },
       { to: '/app/maintenance', label: 'نگهداری', icon: '🔧' },
     ],
@@ -172,7 +175,8 @@ export default function Dashboard() {
             <Route path="equipment/:id" element={<EquipmentDetail />} />
             <Route path="transfers" element={<Transfers />} />
             <Route path="patients" element={<Patients />} />
-            <Route path="loans" element={<ComingSoon title="امانت‌ها" />} />
+            <Route path="requests" element={<Requests />} />
+            <Route path="loans" element={<Loans />} />
             <Route path="maintenance" element={<ComingSoon title="نگهداری" />} />
             <Route path="donors" element={<ComingSoon title="خیرین" />} />
             <Route path="reports" element={<ComingSoon title="گزارش‌ها" />} />
