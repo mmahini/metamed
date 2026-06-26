@@ -11,14 +11,30 @@ A national network for managing medical and care equipment — collecting, lendi
 - **Auth**: Email OTP → JWT
 - **Deploy**: Render (backend + MySQL) · Vercel (frontend)
 
-## Quick Start
+## Quick Start (Docker Desktop)
+
+> **Port note**: Docker Desktop on the dev machine already occupies ports 8000 and 3306, so the compose file maps to host ports **8080** (backend) and **3307** (MySQL).
 
 ```bash
-cp .env.example .env
-make up
+cp backend/.env.example backend/.env
+docker compose up
 ```
 
-Then open [http://localhost:5175](http://localhost:5175).
+| Service   | URL / port                          |
+|-----------|-------------------------------------|
+| Frontend  | http://localhost:5175                |
+| Backend   | http://localhost:8080/api/health/   |
+| MySQL     | localhost:3307  (user: metamed)     |
+
+**Test OTP flow (dev mode returns code in response):**
+```bash
+curl -X POST http://localhost:8080/api/auth/request-otp \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"test@example.com"}'
+# → { "otp_id": "...", "dev_code": "12345", ... }
+```
+
+Use `dev_code` at http://localhost:5175/auth/verify to log in without email.
 
 ## Docs
 
@@ -35,6 +51,6 @@ make migrate         # apply DB migrations
 make makemigrations  # generate new migrations
 make shell-backend   # bash into backend container
 make shell-db        # mysql shell
-make test            # run Django tests
-make typecheck       # frontend TypeScript check
+make test-backend    # run Django tests
+make createsuperuser # create Django admin user
 ```
