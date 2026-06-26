@@ -139,6 +139,88 @@ class Equipment(models.Model):
         )
 
 
+class TransferStatus(models.TextChoices):
+    PENDING = "pending", "در انتظار تأیید"
+    IN_TRANSIT = "in_transit", "در حال انتقال"
+    COMPLETED = "completed", "تکمیل شده"
+    CANCELLED = "cancelled", "لغو شده"
+
+
+class EquipmentTransfer(models.Model):
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, related_name="transfers")
+    from_unit = models.ForeignKey(
+        "organization.Unit", null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="transfers_out", verbose_name="از واحد",
+    )
+    to_unit = models.ForeignKey(
+        "organization.Unit", null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="transfers_in", verbose_name="به واحد",
+    )
+    status = models.CharField(
+        max_length=20, choices=TransferStatus.choices,
+        default=TransferStatus.PENDING, verbose_name="وضعیت انتقال",
+    )
+    reason = models.TextField(blank=True, verbose_name="دلیل انتقال")
+    requested_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="requested_transfers", verbose_name="درخواست‌دهنده",
+    )
+    completed_at = models.DateTimeField(null=True, blank=True, verbose_name="زمان تکمیل")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "انتقال تجهیز"
+        verbose_name_plural = "انتقال‌های تجهیزات"
+        ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return f"{self.equipment.code}: {self.from_unit} → {self.to_unit}"
+
+    def complete(self, completed_by=None) -> None:
+        from django.utils import timezone
+        self.status = TransferStatus.COMPLETED
+        self.completed_at = timezone.now()
+        self.save(update_fields=["status", "completed_at"])
+        # move the equipment to the destination unit
+        self.equipment.unit = self.to_unit
+        if self.to_unit:
+            self.equipment.branch = self.to_unit.branch
+        self.equipment.save(update_fields=["unit", "branch", "updated_at"])
+        self.equipment.change_status(
+            EquipmentStatus.READY, changed_by=completed_by, notes="انتقال تکمیل شد",
+        )
+
+
+class InspectionResult(models.TextChoices):
+    PASS = "pass", "سالم"
+    MINOR_ISSUE = "minor_issue", "نقص جزئی"
+    NEEDS_REPAIR = "needs_repair", "نیازمند تعمیر"
+    FAIL = "fail", "مردود"
+
+
+class EquipmentInspection(models.Model):
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, related_name="inspections")
+    result = models.CharField(
+        max_length=20, choices=InspectionResult.choices,
+        default=InspectionResult.PASS, verbose_name="نتیجه بازرسی",
+    )
+    checklist = models.JSONField(default=dict, blank=True, verbose_name="چک‌لیست")
+    notes = models.TextField(blank=True, verbose_name="توضیحات")
+    inspected_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="inspections", verbose_name="بازرس",
+    )
+    inspected_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "بازرسی تجهیز"
+        verbose_name_plural = "بازرسی‌های تجهیزات"
+        ordering = ["-inspected_at"]
+
+    def __str__(self) -> str:
+        return f"{self.equipment.code}: {self.get_result_display()}"
+
+
 class EquipmentStatusHistory(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, related_name="status_history")
     old_status = models.CharField(max_length=30, blank=True, verbose_name="وضعیت قبلی")

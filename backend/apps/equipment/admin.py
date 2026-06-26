@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Supplier, Equipment, EquipmentStatusHistory
+from .models import (
+    Supplier, Equipment, EquipmentStatusHistory,
+    EquipmentTransfer, EquipmentInspection,
+)
 
 
 @admin.register(Supplier)
@@ -31,3 +34,19 @@ class EquipmentStatusHistoryAdmin(admin.ModelAdmin):
     list_filter = ["new_status"]
     readonly_fields = ["changed_at"]
     raw_id_fields = ["equipment", "changed_by"]
+
+
+@admin.register(EquipmentTransfer)
+class EquipmentTransferAdmin(admin.ModelAdmin):
+    list_display = ["equipment", "from_unit", "to_unit", "status", "requested_by", "created_at"]
+    list_filter = ["status"]
+    raw_id_fields = ["equipment", "from_unit", "to_unit", "requested_by"]
+    readonly_fields = ["created_at", "completed_at"]
+
+
+@admin.register(EquipmentInspection)
+class EquipmentInspectionAdmin(admin.ModelAdmin):
+    list_display = ["equipment", "result", "inspected_by", "inspected_at"]
+    list_filter = ["result"]
+    raw_id_fields = ["equipment", "inspected_by"]
+    readonly_fields = ["inspected_at"]

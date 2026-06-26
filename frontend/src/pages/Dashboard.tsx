@@ -3,6 +3,8 @@ import { useAuth } from '../auth/AuthContext'
 import Branches from './Branches'
 import Units from './Units'
 import EquipmentList from './EquipmentList'
+import EquipmentDetail from './EquipmentDetail'
+import Transfers from './Transfers'
 import Patients from './Patients'
 
 const ROLE_LABELS: Record<string, string> = {
@@ -23,6 +25,7 @@ const NAV_SECTIONS = [
     items: [
       { to: '/app', label: 'داشبورد', icon: '📊', exact: true },
       { to: '/app/equipment', label: 'تجهیزات', icon: '🏥' },
+      { to: '/app/transfers', label: 'انتقال‌ها', icon: '🔁' },
       { to: '/app/patients', label: 'بیماران', icon: '👤' },
       { to: '/app/loans', label: 'امانت‌ها', icon: '📋' },
       { to: '/app/maintenance', label: 'نگهداری', icon: '🔧' },
@@ -166,6 +169,8 @@ export default function Dashboard() {
             <Route path="branches" element={<Branches />} />
             <Route path="units" element={<Units />} />
             <Route path="equipment" element={<EquipmentList />} />
+            <Route path="equipment/:id" element={<EquipmentDetail />} />
+            <Route path="transfers" element={<Transfers />} />
             <Route path="patients" element={<Patients />} />
             <Route path="loans" element={<ComingSoon title="امانت‌ها" />} />
             <Route path="maintenance" element={<ComingSoon title="نگهداری" />} />
