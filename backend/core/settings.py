@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "apps.organization",
     "apps.equipment",
     "apps.patients",
+    "apps.loans",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
